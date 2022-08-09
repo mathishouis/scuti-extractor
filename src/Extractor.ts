@@ -1,6 +1,9 @@
 import nodePackage from '../package.json';
+import {FurnitureTask} from "./tasks/FurnitureTask";
 
 export class Extractor {
+
+    private _furnitureTask: FurnitureTask;
 
     public initialise(): void {
         console.log("\x1b[33m", "   _____            _   _                      \n" +
@@ -15,8 +18,12 @@ export class Extractor {
             " | |____ >  <| |_| | | (_| | (__| || (_) | |   \n" +
             " |______/_/\\_\\\\__|_|  \\__,_|\\___|\\__\\___/|_|   \n" +
             "                                               ");
-        console.log("\x1b[0m", ">", "\x1b[32m", "Version " + nodePackage.version);
+        console.log("\x1b[0m", ">", "\x1b[32m", `Version ${nodePackage.version}`);
         console.log("\x1b[0m", "\n");
+
+        this._furnitureTask = new FurnitureTask();
+        this._furnitureTask.initialise();
+        this._furnitureTask.run();
     }
 
 }
