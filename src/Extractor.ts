@@ -5,7 +5,7 @@ export class Extractor {
 
     private _furnitureTask: FurnitureTask;
 
-    public initialise(): void {
+    public async initialise(): Promise<void> {
         console.log("\x1b[33m", "   _____            _   _                      \n" +
             "  / ____|          | | (_)                     \n" +
             " | (___   ___ _   _| |_ _                      \n" +
@@ -22,7 +22,7 @@ export class Extractor {
         console.log("\x1b[0m", "\n");
 
         this._furnitureTask = new FurnitureTask();
-        this._furnitureTask.initialise();
+        await this._furnitureTask.initialise();
         this._furnitureTask.run();
     }
 
