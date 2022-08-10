@@ -26,7 +26,7 @@ export class OffsetBuilder {
                         spriteSourceSize.y = -parseInt(asset.attributes.y);*/
                         spriteSourceSize.x = -parseInt(asset.attributes.x);
                         spriteSourceSize.y = -parseInt(asset.attributes.y);
-                        spritesheet.frames[asset.attributes.name] = asset.attributes.flipH === undefined;
+                        spritesheet.frames[asset.attributes.name].flipH = asset.attributes.flipH === undefined;
                         modifiedAssets.push(asset);
                     } else {
                         spritesheet.frames[asset.attributes.name] = {
