@@ -14,14 +14,20 @@ export class OffsetBuilder {
                 spritesheet.meta.image = `${assetName}.png`;
             }
 
+            let modifiedAssets: {}[] = [];
+
             assetsXml.elements[0]?.elements.forEach((asset) => {
                 const name: string = asset.attributes.name;
 
                 try {
                     if (spritesheet.frames[asset.attributes.name] !== undefined) {
                         const {spriteSourceSize} = spritesheet.frames[asset.attributes.name];
-                        spriteSourceSize.x = asset.attributes.flipH === undefined ? -parseInt(asset.attributes.x) : -(parseInt(spriteSourceSize.w) - parseInt(asset.attributes.x));
+                        /*spriteSourceSize.x = asset.attributes.flipH === undefined ? -parseInt(asset.attributes.x) : -(parseInt(spriteSourceSize.w) - parseInt(asset.attributes.x));
+                        spriteSourceSize.y = -parseInt(asset.attributes.y);*/
+                        spriteSourceSize.x = -parseInt(asset.attributes.x);
                         spriteSourceSize.y = -parseInt(asset.attributes.y);
+                        spritesheet.frames[asset.attributes.name] = asset.attributes.flipH === undefined;
+                        modifiedAssets.push(asset);
                     } else {
                         spritesheet.frames[asset.attributes.name] = {
                             "frame": {
@@ -35,8 +41,8 @@ export class OffsetBuilder {
                                 "h": spritesheet.frames[asset.attributes.source].sourceSize.h
                             },
                             "spriteSourceSize": {
-                                "x": spritesheet.frames[asset.attributes.source].spriteSourceSize.x,
-                                "y": spritesheet.frames[asset.attributes.source].spriteSourceSize.y,
+                                "x": modifiedAssets.includes(asset) ? spritesheet.frames[asset.attributes.source].spriteSourceSize.x : -parseInt(asset.attributes.x),
+                                "y": modifiedAssets.includes(asset) ? spritesheet.frames[asset.attributes.source].spriteSourceSize.y : -parseInt(asset.attributes.y),
                                 "w": spritesheet.frames[asset.attributes.source].spriteSourceSize.w,
                                 "h": spritesheet.frames[asset.attributes.source].spriteSourceSize.h
                             },
@@ -44,6 +50,7 @@ export class OffsetBuilder {
                             "trimmed": true,
                             "flipH": asset.attributes.flipH !== undefined
                         }
+                        modifiedAssets.push(asset);
                     }
                 } catch (e) {
                     const splittedName: string[] = name.split("_");
