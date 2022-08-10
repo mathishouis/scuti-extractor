@@ -8,7 +8,7 @@ export class SWFDataExtractor {
 
     public extract(assetName: string, inputPath: string, outputPath: string): Promise<void> {
         return new Promise<void>(async resolve => {
-            fs.mkdirSync(`${inputPath}/${assetName}`, { recursive: true } );
+            fs.mkdirSync(`${outputPath}/${assetName}`, { recursive: true } );
             const swf = SWFReader.readSync(`${inputPath}/${assetName}.swf`);
             const symbolMap: [] = swf.tags.find((tag: any) => tag.header.code === 76).symbols.map((symbol: any) => {
                 symbol.name = symbol.name.substr(assetName.length + 1);

@@ -8,8 +8,8 @@ export class SpritesheetBuilder {
                 src: [
                     `${outputPath}/${assetName}/sprites/*.png`
                 ],
-                spritePath: `${outputPath}/${assetName}.png`,
-                stylesheetPath: `${outputPath}/${assetName}.json`,
+                spritePath: `${outputPath}/${assetName}/${assetName}.png`,
+                stylesheetPath: `${outputPath}/${assetName}/${assetName}.json`,
                 layout: 'packed',
                 compositor: 'jimp',
                 stylesheet: './src/assets/spritesheet.tpl',
