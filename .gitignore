@@ -1,3 +1,6 @@
 /.idea/*
 /.idea/
 /node_modules/*
+/output/*
+/input_dev/*
+/input/*

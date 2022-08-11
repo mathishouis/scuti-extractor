@@ -1,0 +1,17 @@
+{
+  "name": "holo5/assetextractor",
+  "description": "Habbo SWF extractor",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+        "Holo5\\": "./",
+        "Holo5\\AssetExtractor\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=7.1.0",
+    "ext-zlib": "*",
+    "ext-gd": "*",
+    "ext-xml": "*"
+  }
+}

@@ -5,7 +5,7 @@ export class OffsetBuilder {
 
     public buildFurnitureOffset(assetName: string, outputPath: string) {
         return new Promise<void>(async resolve => {
-            let assetsXml: any = fs.readFileSync(`${outputPath}/${assetName}/${assetName}_assets.xml`);
+            let assetsXml: any = fs.readFileSync(`${outputPath}/${assetName}/binaries/${assetName}_${assetName}_assets.bin`);
             assetsXml = xml2js(assetsXml, {compact: false});
             let spritesheet: any = fs.readFileSync(`${outputPath}/${assetName}/${assetName}.json`);
             spritesheet = JSON.parse(spritesheet);
@@ -15,50 +15,67 @@ export class OffsetBuilder {
             }
 
             let modifiedAssets: {}[] = [];
+            let sourceAssets: any[] = [];
 
             assetsXml.elements[0]?.elements.forEach((asset) => {
-                const name: string = asset.attributes.name;
+                if(asset.attributes !== undefined) {
+                    const name: string = asset.attributes.name;
 
-                try {
-                    if (spritesheet.frames[asset.attributes.name] !== undefined) {
-                        const {spriteSourceSize} = spritesheet.frames[asset.attributes.name];
-                        /*spriteSourceSize.x = asset.attributes.flipH === undefined ? -parseInt(asset.attributes.x) : -(parseInt(spriteSourceSize.w) - parseInt(asset.attributes.x));
-                        spriteSourceSize.y = -parseInt(asset.attributes.y);*/
-                        spriteSourceSize.x = -parseInt(asset.attributes.x);
-                        spriteSourceSize.y = -parseInt(asset.attributes.y);
-                        spritesheet.frames[asset.attributes.name].flipH = asset.attributes.flipH === undefined;
-                        modifiedAssets.push(asset);
-                    } else {
-                        spritesheet.frames[asset.attributes.name] = {
-                            "frame": {
-                                "x": spritesheet.frames[asset.attributes.source].frame.x,
-                                "y": spritesheet.frames[asset.attributes.source].frame.y,
-                                "w": spritesheet.frames[asset.attributes.source].frame.w,
-                                "h": spritesheet.frames[asset.attributes.source].frame.h
-                            },
-                            "sourceSize": {
-                                "w": spritesheet.frames[asset.attributes.source].sourceSize.w,
-                                "h": spritesheet.frames[asset.attributes.source].sourceSize.h
-                            },
-                            "spriteSourceSize": {
-                                "x": modifiedAssets.includes(asset) ? spritesheet.frames[asset.attributes.source].spriteSourceSize.x : -parseInt(asset.attributes.x),
-                                "y": modifiedAssets.includes(asset) ? spritesheet.frames[asset.attributes.source].spriteSourceSize.y : -parseInt(asset.attributes.y),
-                                "w": spritesheet.frames[asset.attributes.source].spriteSourceSize.w,
-                                "h": spritesheet.frames[asset.attributes.source].spriteSourceSize.h
-                            },
-                            "rotated": false,
-                            "trimmed": true,
-                            "flipH": asset.attributes.flipH !== undefined
+                    try {
+                        const splittedName: string[] = asset.attributes.name.split("_");
+                        splittedName.splice(splittedName.length - 4, 4);
+                        const className = splittedName.join("_");
+                        if (spritesheet.frames[className + "_" + asset.attributes.name] !== undefined) {
+                            const {spriteSourceSize} = spritesheet.frames[className + "_" + asset.attributes.name];
+                            spriteSourceSize.x = -parseInt(asset.attributes.x);
+                            spriteSourceSize.y = -parseInt(asset.attributes.y);
+                            spritesheet.frames[className + "_" + asset.attributes.name].flipH = asset.attributes.flipH !== undefined;
+                            modifiedAssets.push(asset);
+                        } else if(asset.attributes.source !== undefined) {
+                            sourceAssets.push(asset);
                         }
-                        modifiedAssets.push(asset);
-                    }
-                } catch (e) {
-                    const splittedName: string[] = name.split("_");
-                    if(splittedName[splittedName.length - 4] !== "32") {
-                        console.log("\x1b[0m", ">>", "\x1b[31m", `Error finding frame ${name}`, "\x1b[0m");
+                    } catch (e) {
+                        console.log(e);
+                        const splittedName: string[] = name.split("_");
+                        if (splittedName[splittedName.length - 4] !== "32") {
+                            console.log("\x1b[0m", ">>", "\x1b[31m", `Error finding frame ${name}`, "\x1b[0m");
+                        }
                     }
                 }
             });
+            sourceAssets.forEach((asset) => {
+                try {
+                    const splittedName: string[] = asset.attributes.name.split("_");
+                    splittedName.splice(splittedName.length - 4, 4);
+                    const className = splittedName.join("_");
+
+                    spritesheet.frames[className + "_" + asset.attributes.name] = {
+                        "frame": {
+                            "x": spritesheet.frames[className + "_" + asset.attributes.source].frame.x,
+                            "y": spritesheet.frames[className + "_" + asset.attributes.source].frame.y,
+                            "w": spritesheet.frames[className + "_" + asset.attributes.source].frame.w,
+                            "h": spritesheet.frames[className + "_" + asset.attributes.source].frame.h
+                        },
+                        "sourceSize": {
+                            "w": spritesheet.frames[className + "_" + asset.attributes.source].sourceSize.w,
+                            "h": spritesheet.frames[className + "_" + asset.attributes.source].sourceSize.h
+                        },
+                        "spriteSourceSize": {
+                            "x": -parseInt(asset.attributes.x),
+                            "y": -parseInt(asset.attributes.y),
+                            "w": spritesheet.frames[className + "_" + asset.attributes.source].spriteSourceSize.w,
+                            "h": spritesheet.frames[className + "_" + asset.attributes.source].spriteSourceSize.h
+                        },
+                        "rotated": false,
+                        "trimmed": true,
+                        "flipH": asset.attributes.flipH !== undefined
+                    }
+                    modifiedAssets.push(asset);
+                }catch (e) {
+
+                }
+            });
+
             fs.writeFile(`${outputPath}/${assetName}/${assetName}.json`, JSON.stringify(spritesheet), () => {
                 resolve();
             });
