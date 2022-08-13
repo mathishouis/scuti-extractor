@@ -50,6 +50,7 @@ export class VisualizationBuilder {
                                 ink: layer._attributes?.ink,
                                 alpha: layer._attributes?.alpha !== undefined ? parseInt(layer._attributes?.alpha) : undefined,
                                 z: layer._attributes?.z,
+                                tag: layer._attributes?.tag,
                                 ignoreMouse: layer._attributes?.ignoreMouse === '1',
                             };
                         }
