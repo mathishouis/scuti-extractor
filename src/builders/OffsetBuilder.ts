@@ -105,8 +105,8 @@ export class OffsetBuilder {
                         //console.log(name, offsetX, offsetY);
                         if (spritesheet.frames[name] !== undefined) {
                             const {spriteSourceSize} = spritesheet.frames[name];
-                            spriteSourceSize.x = offsetX;
-                            spriteSourceSize.y = offsetY;
+                            spriteSourceSize.x = -offsetX;
+                            spriteSourceSize.y = -offsetY;
                         } else {
                             console.log("SOOOOOOOOOON")
                         }

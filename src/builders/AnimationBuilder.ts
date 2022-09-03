@@ -28,18 +28,14 @@ export class AnimationBuilder {
                                 spritesheet.animations[name].sprites[element.attributes.id].directions = {};
                                 element.elements.forEach(childElement => {
                                     if(childElement.name === "direction") {
-                                        spritesheet.animations[name].sprites[element.attributes.id].directions[childElement.attributes.id] = {
-                                            dz: childElement.attributes.dz
-                                        }
+                                        spritesheet.animations[name].sprites[element.attributes.id].directions[childElement.attributes.id] = childElement.attributes
                                     }
                                 });
                             }
                             break;
                         case "add":
                             if(!spritesheet.animations[name].add) spritesheet.animations[name].add = {};
-                            spritesheet.animations[name].add[element.attributes.id] = {
-                                align: element.attributes.align
-                            }
+                            spritesheet.animations[name].add[element.attributes.id] = element.attributes
                             break;
                         case "default":
                             break;
@@ -49,8 +45,11 @@ export class AnimationBuilder {
                             if(!spritesheet.animations[name].frames) spritesheet.animations[name].frames = [];
                             let frame = {};
                             element.elements.forEach(childElement => {
-                                if(!frame[childElement.name]) frame[childElement.name] = {};
-                                frame[childElement.name][childElement.attributes.id] = childElement.attributes;
+                                if(childElement.type !== 'comment') {
+                                    if (!frame[childElement.name]) frame[childElement.name] = {};
+                                    if (name === 'fx.188') console.log(childElement)
+                                    frame[childElement.name][childElement.attributes.id] = childElement.attributes;
+                                }
                             });
                             spritesheet.animations[name].frames.push(frame);
                             break;
