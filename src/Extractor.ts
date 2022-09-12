@@ -1,11 +1,13 @@
 import nodePackage from '../package.json';
 import {FurnitureTask} from "./tasks/FurnitureTask";
 import {EffectTask} from "./tasks/EffectTask";
+import {GamedataTask} from "./tasks/GamedataTask";
 
 export class Extractor {
 
     private _furnitureTask: FurnitureTask;
     private _effectTask: EffectTask;
+    private _gamedataTask: GamedataTask;
 
     public async initialise(): Promise<void> {
         console.log("\x1b[33m", "   _____            _   _                      \n" +
@@ -26,9 +28,12 @@ export class Extractor {
         /*this._furnitureTask = new FurnitureTask();
         await this._furnitureTask.initialise();
         this._furnitureTask.run();*/
-        this._effectTask = new EffectTask();
+        /*this._effectTask = new EffectTask();
         await this._effectTask.initialise();
-        this._effectTask.run();
+        this._effectTask.run();*/
+        this._gamedataTask = new GamedataTask();
+        await this._gamedataTask.initialise();
+        this._gamedataTask.run();
     }
 
 }
