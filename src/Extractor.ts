@@ -2,6 +2,7 @@ import nodePackage from '../package.json';
 import configuration from '../configuration.json';
 import {Task} from "./tasks/Task";
 import {FurnitureDataTask} from "./tasks/FurnitureDataTask";
+import {FurnitureTask} from "./tasks/FurnitureTask";
 
 export class Extractor {
     public tasks: (new (configuration: any) => Task)[] = [
@@ -24,6 +25,7 @@ export class Extractor {
         console.log("\x1b[0m", "\n");
 
         await new FurnitureDataTask({path: configuration['task.furnituredata.path']}).run();
+        await new FurnitureTask({path: configuration['task.furniture.path']}).run();
     }
 
 }
