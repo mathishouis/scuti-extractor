@@ -36,8 +36,8 @@ export class FurnitureDataFormatter {
 
         if (type === 'floor') {
             const direction: number = ((value.defaultdir && parseInt(value.defaultdir[0])) || 0);
-            const sizeX: number = ((value.xdim && parseInt(value.xdim[0])) || 0);
-            const sizeY: number = ((value.ydim && parseInt(value.ydim[0])) || 0);
+            //const sizeX: number = ((value.xdim && parseInt(value.xdim[0])) || 0);
+            //const sizeY: number = ((value.ydim && parseInt(value.ydim[0])) || 0);
             const colors: string[] = [];
 
             if (value.partcolors) value.partcolors.forEach((partcolors) => {
@@ -51,10 +51,10 @@ export class FurnitureDataFormatter {
             });
 
             data['direction'] = direction;
-            data['size'] = {
+            /*data['size'] = {
                 x: sizeX,
                 y: sizeY,
-            };
+            };*/
             if (colors.length) data['colors'] = colors;
         }
 
