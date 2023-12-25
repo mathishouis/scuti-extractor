@@ -31,7 +31,7 @@ export class FurnitureDataTask extends Task {
 
         const formattedFile = FurnitureDataFormatter.format(parsedFile.furnidata);
 
-        writeFileSyncRecursive('.\\output\\generic\\furnitures.data', JSON.stringify(formattedFile));
+        writeFileSyncRecursive('.\\output\\data\\furnitures.data', JSON.stringify(formattedFile));
 
         log('FurnitureDataTask', 'FurnitureDataTask ended!');
     }
