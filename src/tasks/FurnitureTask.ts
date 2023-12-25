@@ -32,12 +32,12 @@ export class FurnitureTask extends Task {
         for (const fileName of fileNames) {
             const assetName = path.parse(fileName).name;
 
-            await extract(assetName, `${this.path}/${fileName}`, './output/furnitures/');
-            await spritesheet(assetName, `./output/furnitures/${assetName}/images/`, `./output/furnitures/${assetName}/`);
+            await extract(assetName, `${this.path}/${fileName}`, './output/bundles/furnitures/');
+            await spritesheet(assetName, `./output/bundles/furnitures/${assetName}/images/`, `./output/bundles/furnitures/${assetName}/`);
 
-            const indexFile = fs.readFileSync(`./output/furnitures/${assetName}/binaries/index.xml`, 'utf-8');
-            const visualizationFile = fs.readFileSync(`./output/furnitures/${assetName}/binaries/${assetName}_visualization.xml`, 'utf-8');
-            const logicFile = fs.readFileSync(`./output/furnitures/${assetName}/binaries/${assetName}_logic.xml`, 'utf-8');
+            const indexFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/index.xml`, 'utf-8');
+            const visualizationFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/${assetName}_visualization.xml`, 'utf-8');
+            const logicFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/${assetName}_logic.xml`, 'utf-8');
 
             const formattedFile = FurniturePropertiesFormatter.format(
                 await parseStringPromise(indexFile),
@@ -45,17 +45,17 @@ export class FurnitureTask extends Task {
                 await parseStringPromise(logicFile)
             );
 
-            const spritesheetFile = JSON.parse(fs.readFileSync(`./output/furnitures/${assetName}/${assetName}.json`, 'utf-8'));
+            const spritesheetFile = JSON.parse(fs.readFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`, 'utf-8'));
             spritesheetFile['properties'] = formattedFile;
 
-            await writeFileSync(`./output/furnitures/${assetName}/${assetName}.json`, JSON.stringify(spritesheetFile));
+            await writeFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`, JSON.stringify(spritesheetFile));
 
             const bundle = new Bundle();
-            bundle.add('texture', fs.readFileSync(`./output/furnitures/${assetName}/${assetName}.png`));
-            bundle.add('data', fs.readFileSync(`./output/furnitures/${assetName}/${assetName}.json`));
-            fs.writeFileSync(`./output/furnitures/${assetName}.bundle`, bundle.buffer);
+            bundle.add('texture', fs.readFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.png`));
+            bundle.add('data', fs.readFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`));
+            fs.writeFileSync(`./output/bundles/furnitures/${assetName}.bundle`, bundle.buffer);
 
-            fs.rmSync(`./output/furnitures/${assetName}`, { recursive: true, force: true });
+            fs.rmSync(`./output/bundles/furnitures/${assetName}`, { recursive: true, force: true });
 
             warn('FurnitureTask', `Converted ${assetName}`);
         }
