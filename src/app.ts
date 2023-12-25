@@ -1,4 +1,6 @@
-import {Extractor} from "./Extractor";
+import { Extractor } from './Extractor';
 
-let extractor: Extractor = new Extractor();
-extractor.initialise();
+(async () => {
+    let extractor: Extractor = new Extractor();
+    await extractor.initialize();
+})();

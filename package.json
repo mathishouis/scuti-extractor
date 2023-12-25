@@ -20,13 +20,10 @@
   },
   "homepage": "https://github.com/kozennnn/scuti-extractor#readme",
   "devDependencies": {
-    "typescript": "^4.7.4"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@gizeta/swf-reader": "^1.0.0",
-    "@types/node": "^18.0.0",
-    "jimp": "^0.16.1",
-    "node-sprite-generator": "^0.10.2",
-    "xml-js": "^1.6.11"
+    "@types/node": "^20.10.5",
+    "xml2js": "^0.6.2"
   }
 }

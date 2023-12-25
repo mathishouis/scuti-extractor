@@ -2,6 +2,5 @@
 /.idea/
 /node_modules/*
 /output/*
-/input_dev/*
 /input/*
-/output_dev/*
+configuration.json

@@ -1,15 +1,13 @@
 import nodePackage from '../package.json';
-import {FurnitureTask} from "./tasks/FurnitureTask";
-import {EffectTask} from "./tasks/EffectTask";
-import {GamedataTask} from "./tasks/GamedataTask";
+import configuration from '../configuration.json';
+import {Task} from "./tasks/Task";
+import {FurnitureDataTask} from "./tasks/FurnitureDataTask";
 
 export class Extractor {
-
-    private _furnitureTask: FurnitureTask;
-    private _effectTask: EffectTask;
-    private _gamedataTask: GamedataTask;
-
-    public async initialise(): Promise<void> {
+    public tasks: (new (configuration: any) => Task)[] = [
+        FurnitureDataTask
+    ];
+    public async initialize(): Promise<void> {
         console.log("\x1b[33m", "   _____            _   _                      \n" +
             "  / ____|          | | (_)                     \n" +
             " | (___   ___ _   _| |_ _                      \n" +
@@ -25,15 +23,7 @@ export class Extractor {
         console.log("\x1b[0m", ">", "\x1b[32m", `Version ${nodePackage.version}`);
         console.log("\x1b[0m", "\n");
 
-        /*this._furnitureTask = new FurnitureTask();
-        await this._furnitureTask.initialise();
-        this._furnitureTask.run();*/
-        /*this._effectTask = new EffectTask();
-        await this._effectTask.initialise();
-        this._effectTask.run();*/
-        this._gamedataTask = new GamedataTask();
-        await this._gamedataTask.initialise();
-        this._gamedataTask.run();
+        await new FurnitureDataTask({path: configuration['task.furnituredata.path']}).run();
     }
 
 }
