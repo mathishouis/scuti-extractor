@@ -1,8 +1,9 @@
 import { Task } from './Task';
 import * as fs from 'fs';
 import * as path from 'path';
-import { warn } from '../utils/Logger';
+import {log, warn} from '../utils/Logger';
 import { extract } from '../utils/SWF';
+import {spritesheet} from "../utils/Spritesheet";
 
 interface Configuration {
     path: string;
@@ -22,11 +23,16 @@ export class FurnitureTask extends Task {
 
         if (fileNames.length === 0) return warn('FurnitureTask', 'There is no furniture to convert!');
 
-        fileNames.forEach((fileName) => {
-           console.log(fileName);
-           //const file = fs.readFileSync(this.path + '/' + fileName, { encoding: 'utf-8' });
+        log('FurnitureTask', 'Running FurnitureTask...');
 
-           extract(path.parse(fileName).name, this.path + '/' + fileName, './output/furnitures/');
-        });
+        for (const fileName of fileNames) {
+            const assetName = path.parse(fileName).name;
+
+            await extract(assetName, `${this.path}/${fileName}`, './output/furnitures/');
+            await spritesheet(assetName, `./output/furnitures/${assetName}/images/`, `./output/furnitures/${assetName}/`);
+            warn('FurnitureTask', `Converted ${assetName}`);
+        }
+
+        log('FurnitureTask', 'FurnitureTask ended!');
     }
 }

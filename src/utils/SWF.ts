@@ -4,7 +4,7 @@ import * as zlib from 'zlib';
 import Jimp from 'jimp';
 
 // Source: https://github.com/higoka/habbo-swf-extractor
-function extract(name: string, input: string, output: string): void {
+async function extract(name: string, input: string, output: string): Promise<void> {
     const swf = SWFReader.readSync(input);
 
     const map = swf.tags.find((tag) => tag.header.code === 76).symbols.map((symbol) => {
@@ -12,7 +12,7 @@ function extract(name: string, input: string, output: string): void {
         return symbol;
     });
 
-    swf.tags.forEach((tag) => {
+    for (const tag of swf.tags) {
         // Binary
         if (tag.header.code === 87) {
             const symbol = map.find((symbol) => symbol.id === tag.data.readUInt16LE());
@@ -23,7 +23,7 @@ function extract(name: string, input: string, output: string): void {
         if (tag.header.code === 36) {
             const symbol = map.find((symbol) => symbol.id === tag.characterId)
 
-            if (symbol) {
+            if (symbol && !symbol.name.includes('_32_')) {
                 const image = new Jimp(tag.bitmapWidth, tag.bitmapHeight)
                 const bitmap = zlib.unzipSync(Buffer.from(tag.zlibBitmapData, 'hex'))
 
@@ -40,10 +40,10 @@ function extract(name: string, input: string, output: string): void {
                     }
                 }
 
-                image.write(`${output}/${name}/images/${symbol.name}.png`);
+                await image.writeAsync(`${output}/${name}/images/${symbol.name}.png`);
             }
         }
-    });
+    }
 }
 
 export {
