@@ -8,6 +8,7 @@ import { parseStringPromise } from 'xml2js';
 import { FurniturePropertiesFormatter } from '../formatters/FurniturePropertiesFormatter';
 import { writeFileSync } from 'fs';
 import { Bundle } from 'scuti-bundle';
+import {SpritesheetFormatter} from "../formatters/SpritesheetFormatter";
 
 interface Configuration {
     path: string;
@@ -36,6 +37,7 @@ export class FurnitureTask extends Task {
             await spritesheet(assetName, `./output/bundles/furnitures/${assetName}/images/`, `./output/bundles/furnitures/${assetName}/`);
 
             const indexFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/index.xml`, 'utf-8');
+            const assetsFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/${assetName}_assets.xml`, 'utf-8');
             const visualizationFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/${assetName}_visualization.xml`, 'utf-8');
             const logicFile = fs.readFileSync(`./output/bundles/furnitures/${assetName}/binaries/${assetName}_logic.xml`, 'utf-8');
 
@@ -48,7 +50,12 @@ export class FurnitureTask extends Task {
             const spritesheetFile = JSON.parse(fs.readFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`, 'utf-8'));
             spritesheetFile['properties'] = formattedFile;
 
-            await writeFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`, JSON.stringify(spritesheetFile));
+            const formatedSpritesheet = SpritesheetFormatter.format(
+                await parseStringPromise(assetsFile),
+                spritesheetFile
+            );
+
+            await writeFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`, JSON.stringify(formatedSpritesheet));
 
             const bundle = new Bundle();
             bundle.add('texture', fs.readFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.png`));
