@@ -1,7 +1,7 @@
 export class FurniturePropertiesFormatter {
     public static format(indexValue: any, visualizationValue: any, logicValue: any): {} {
         const output = {
-            //layerCount: 0,
+            layerCount: 0,
             logic: '',
             visualization: '',
             dimensions: {
@@ -39,7 +39,7 @@ export class FurniturePropertiesFormatter {
             const visualizationAttributes = visualization.$;
 
             if (visualizationAttributes.size === '64') {
-                //output.layerCount = Number(visualizationAttributes.layerCount);
+                output.layerCount = Number(visualizationAttributes.layerCount);
 
                 if (visualization.colors) {
                     const colors = visualization.colors[0].color;
@@ -52,9 +52,11 @@ export class FurniturePropertiesFormatter {
                         };
 
                         if (color.colorLayer) color.colorLayer.forEach((layer) => {
+                            const layerAttributes = layer.$;
+
                             colorOutput.layers.push({
-                                id: Number(layer.id),
-                                color: layer.color
+                                id: Number(layerAttributes.id),
+                                color: layerAttributes.color
                             });
                         });
 

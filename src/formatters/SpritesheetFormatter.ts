@@ -1,6 +1,7 @@
 export class SpritesheetFormatter {
     public static format(assetsValue: any, spritesheetValue: any): {} {
         const assets = assetsValue.assets.asset;
+        const sourceAssets = [];
 
         assets.forEach((asset) => {
             const assetAttributes = asset.$;
@@ -16,8 +17,20 @@ export class SpritesheetFormatter {
 
                 spritesheetValue.frames[assetAttributes.name.replace('_64_', '_')] = spritesheetValue.frames[assetAttributes.name];
                 delete spritesheetValue.frames[assetAttributes.name];
-            } else if (assetAttributes.source && spritesheetValue.frames[assetAttributes.source.replace('_64_', '_')]) {
-                const { frame, sourceSize, spriteSourceSize } = spritesheetValue.frames[assetAttributes.source.replace('_64_', '_')];
+            } else if (assetAttributes.source) {
+                sourceAssets.push(asset);
+            }
+        });
+
+        sourceAssets.forEach((asset) => {
+            const assetAttributes = asset.$;
+
+            if (spritesheetValue.frames[assetAttributes.source.replace('_64_', '_')]) {
+                const {
+                    frame,
+                    sourceSize,
+                    spriteSourceSize
+                } = spritesheetValue.frames[assetAttributes.source.replace('_64_', '_')];
                 const flipped = assetAttributes.flipH !== undefined;
 
                 spritesheetValue.frames[assetAttributes.name.replace('_64_', '_')] = {
