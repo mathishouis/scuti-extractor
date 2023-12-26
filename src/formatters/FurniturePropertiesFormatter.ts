@@ -94,7 +94,7 @@ export class FurniturePropertiesFormatter {
                        layers.forEach((layer) => {
                            const layerAttributes = layer.$;
                            const layerOutput = {
-                               id: layerAttributes.id
+                               id: Number(layerAttributes.id)
                            };
 
                            if (layerAttributes['frameRepeat']) layerOutput['frameRepeat'] = Number(layerAttributes['frameRepeat']);

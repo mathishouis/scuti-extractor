@@ -21,9 +21,9 @@ async function extract(name: string, input: string, output: string): Promise<voi
 
         // Image
         if (tag.header.code === 36) {
-            const symbol = map.find((symbol) => symbol.id === tag.characterId)
+            const symbols = map.filter((symbol) => symbol.id === tag.characterId && !symbol.name.includes('_32_'));
 
-            if (symbol && !symbol.name.includes('_32_')) {
+            for (const symbol of symbols) {
                 const image = new Jimp(tag.bitmapWidth, tag.bitmapHeight)
                 const bitmap = zlib.unzipSync(Buffer.from(tag.zlibBitmapData, 'hex'))
 
