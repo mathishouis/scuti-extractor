@@ -13,11 +13,14 @@ export class SpritesheetFormatter {
                 spriteSourceSize.y = -Number(assetAttributes.y);
 
                 if (flipped) spriteSourceSize.flipped = flipped;
-            } else if (assetAttributes.source && spritesheetValue.frames[assetAttributes.source]) {
-                const { frame, sourceSize, spriteSourceSize } = spritesheetValue.frames[assetAttributes.source];
+
+                spritesheetValue.frames[assetAttributes.name.replace('_64_', '_')] = spritesheetValue.frames[assetAttributes.name];
+                delete spritesheetValue.frames[assetAttributes.name];
+            } else if (assetAttributes.source && spritesheetValue.frames[assetAttributes.source.replace('_64_', '_')]) {
+                const { frame, sourceSize, spriteSourceSize } = spritesheetValue.frames[assetAttributes.source.replace('_64_', '_')];
                 const flipped = assetAttributes.flipH !== undefined;
 
-                spritesheetValue.frames[assetAttributes.name] = {
+                spritesheetValue.frames[assetAttributes.name.replace('_64_', '_')] = {
                     frame: frame,
                     sourceSize: sourceSize,
                     spriteSourceSize: {
@@ -30,7 +33,7 @@ export class SpritesheetFormatter {
                     trimmed: true
                 };
 
-                if (flipped) spritesheetValue.frames[assetAttributes.name].flipped = flipped;
+                if (flipped) spritesheetValue.frames[assetAttributes.name.replace('_64_', '_')].flipped = flipped;
             }
         });
 

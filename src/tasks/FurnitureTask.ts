@@ -8,7 +8,7 @@ import { parseStringPromise } from 'xml2js';
 import { FurniturePropertiesFormatter } from '../formatters/FurniturePropertiesFormatter';
 import { writeFileSync } from 'fs';
 import { Bundle } from 'scuti-bundle';
-import {SpritesheetFormatter} from '../formatters/SpritesheetFormatter';
+import { SpritesheetFormatter } from '../formatters/SpritesheetFormatter';
 
 interface Configuration {
     path: string;
