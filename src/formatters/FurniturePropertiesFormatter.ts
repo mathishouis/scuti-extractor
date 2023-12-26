@@ -111,6 +111,8 @@ export class FurniturePropertiesFormatter {
 
                            animationOutput.layers.push(layerOutput);
                        });
+
+                       output.animations.push(animationOutput);
                     });
                 }
             }
