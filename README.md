@@ -37,3 +37,6 @@ npm run start
 ```
 
 This will give you an output folder with all the extracted assets. The output directory structure follows the one used in [scuti-resources](https://github.com/kozennnn/scuti-resources). So if you want to use these assets into your project, just clone the scuti-resources repository and paste the extracted resources in it.
+
+### Credits
+- [Higoka](https://github.com/higoka/habbo-swf-extractor) for it's SWF extractor tool
