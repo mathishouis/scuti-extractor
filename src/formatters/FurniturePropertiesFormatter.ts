@@ -78,6 +78,8 @@ export class FurniturePropertiesFormatter {
                         if (layerAttributes['alpha']) layerOutput['alpha'] = Number(layerAttributes['alpha']);
                         if (layerAttributes['z']) layerOutput['z'] = Number(layerAttributes['z']);
                         if (layerAttributes['tag']) layerOutput['tag'] = layerAttributes['tag'];
+                        if (layerAttributes['x']) layerOutput['x'] = Number(layerAttributes['x']);
+                        if (layerAttributes['y']) layerOutput['y'] = Number(layerAttributes['y']);
 
                         output.layers.push(layerOutput);
                     });
