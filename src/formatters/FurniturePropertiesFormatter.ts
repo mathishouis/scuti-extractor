@@ -77,6 +77,7 @@ export class FurniturePropertiesFormatter {
                         if (layerAttributes['ignoreMouse']) layerOutput['interactive'] = Number(layerAttributes['ignoreMouse']) === 0;
                         if (layerAttributes['alpha']) layerOutput['alpha'] = Number(layerAttributes['alpha']);
                         if (layerAttributes['z']) layerOutput['z'] = Number(layerAttributes['z']);
+                        if (layerAttributes['tag']) layerOutput['tag'] = layerAttributes['tag'];
 
                         output.layers.push(layerOutput);
                     });
