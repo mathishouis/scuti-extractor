@@ -21,10 +21,10 @@ export class FurniturePropertiesFormatter {
 
         const logicModel = logicValue.objectData.model[0];
         const dimensionsAttributes = logicModel.dimensions[0].$;
-        const directions = logicModel.directions[0].direction;
+        const directions = logicModel.directions?.[0].direction;
         const visualizations = visualizationValue.visualizationData.graphics[0].visualization;
 
-        directions.forEach((direction) => {
+        if (directions) directions.forEach((direction) => {
            const directionAttributes = direction.$;
            output.directions.push((Number(directionAttributes.id) / 90) * 2);
         });
@@ -86,7 +86,7 @@ export class FurniturePropertiesFormatter {
                 if (visualization.animations) {
                     const animations = visualization.animations[0].animation;
 
-                    animations.forEach((animation) => {
+                    if (animations) animations.forEach((animation) => {
                        const animationAttributes = animation.$;
                        const animationOutput = {
                            state: Number(animationAttributes.id),
