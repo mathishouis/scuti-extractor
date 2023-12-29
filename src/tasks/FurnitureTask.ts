@@ -62,7 +62,7 @@ export class FurnitureTask extends Task {
             bundle.add('data', fs.readFileSync(`./output/bundles/furnitures/${assetName}/${assetName}.json`));
             fs.writeFileSync(`./output/bundles/furnitures/${assetName}.bundle`, bundle.buffer);
 
-            fs.rmSync(`./output/bundles/furnitures/${assetName}`, { recursive: true, force: true });
+            //fs.rmSync(`./output/bundles/furnitures/${assetName}`, { recursive: true, force: true });
 
             warn('FurnitureTask', `Converted ${assetName}`);
         }

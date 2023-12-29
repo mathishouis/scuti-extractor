@@ -12,7 +12,7 @@ export class FurnitureDataFormatter {
             if (furniTypes && Array.isArray(furniTypes)) output.floors = furniTypes.map((furniType) => this.formatTypes(furniType, 'floor'));
         });
 
-        if (value.wallitemtypes) value.roomitemtypes.forEach((wallItemType) => {
+        if (value.wallitemtypes) value.wallitemtypes.forEach((wallItemType) => {
             const furniTypes = wallItemType.furnitype;
             if (furniTypes && Array.isArray(furniTypes)) output.walls = furniTypes.map((furniType) => this.formatTypes(furniType, 'wall'));
         });
