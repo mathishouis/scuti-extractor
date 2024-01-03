@@ -21,7 +21,7 @@ export class FurnitureDataFormatter {
     }
 
     public static formatTypes(value: any, type: string): {} {
-        let data = {};
+        const data = {};
         const attributes = value.$;
         const id: number = ((attributes && parseInt(attributes.id)) || 0);
         const className: string = ((attributes && attributes.classname) || '').split('*')[0];
