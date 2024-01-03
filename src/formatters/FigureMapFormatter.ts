@@ -6,11 +6,6 @@ export class FigureMapFormatter {
 
         output.libs = value.lib.map((lib) => this.formatLib(lib));
 
-        /*if (value.roomitemtypes) value.roomitemtypes.forEach((roomItemType) => {
-            const furniTypes = roomItemType.furnitype;
-            if (furniTypes && Array.isArray(furniTypes)) output.floors = furniTypes.map((furniType) => this.formatTypes(furniType, 'floor'));
-        });*/
-
         return output;
     }
 
@@ -28,7 +23,7 @@ export class FigureMapFormatter {
         const data = {};
         const attributes = value.$;
 
-        if (attributes['id'] !== undefined)  data['id'] = attributes['id'];
+        if (attributes['id'] !== undefined)  data['id'] = Number(attributes['id']);
         if (attributes['type'] !== undefined)  data['type'] = attributes['type'];
 
         return data;
