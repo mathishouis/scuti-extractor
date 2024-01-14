@@ -1,6 +1,7 @@
 {
   "task.furnituredata.path": "./input/gamedata/furnidata.xml",
-  "task.furniture.path": "./input/furnitures",
   "task.figuremap.path": "./input/gamedata/figuremap.xml",
-  "task.figuredata.path": "./input/gamedata/figuredata.xml"
+  "task.figuredata.path": "./input/gamedata/figuredata.xml",
+  "task.furniture.path": "./input/furnitures",
+  "task.figure.path": "./input/figures"
 }

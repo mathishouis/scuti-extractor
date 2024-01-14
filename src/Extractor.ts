@@ -5,6 +5,7 @@ import {FurnitureDataTask} from "./tasks/FurnitureDataTask";
 import {FurnitureTask} from "./tasks/FurnitureTask";
 import {FigureMapTask} from "./tasks/FigureMapTask";
 import {FigureDataTask} from "./tasks/FigureDataTask";
+import {FigureTask} from "./tasks/FigureTask";
 
 export class Extractor {
     public tasks: (new (configuration: any) => Task)[] = [
@@ -30,6 +31,7 @@ export class Extractor {
         await new FurnitureTask({path: configuration['task.furniture.path']}).run();
         await new FigureMapTask({path: configuration['task.figuremap.path']}).run();
         await new FigureDataTask({path: configuration['task.figuredata.path']}).run();
+        await new FigureTask({path: configuration['task.figure.path']}).run();
     }
 
 }
